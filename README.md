@@ -1,0 +1,1 @@
+Chrome plagin for YouTube. Allows to put timestamps (bookmarks) on the video. And then use them to jump on the wanted tymeline from bookmarks later on. 

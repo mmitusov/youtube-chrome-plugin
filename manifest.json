@@ -3,15 +3,15 @@
   "name": "YouTube Bookmark",
   "version": "0.1.0",
   "description": "Make timestamps in YouTube videos",
-  "permissions": ["storage", "tabs"], //chrom.storage & tabs.storage API
-  "host_permissions": ["https://*.youtube.com/*"], //То, на какие хосты мы можем отправлять CORS запросы
+  "permissions": ["storage", "tabs"],
+  "host_permissions": ["https://*.youtube.com/*"], 
   "background": {
-    "service_worker": "background.js" //service_worker работает только с manifest version 3
+    "service_worker": "background.js"
   },
-  "content_scripts": [ //Скрипты которые будут работать в пределах той страницы, на которой мы находимся
+  "content_scripts": [
     {
       "matches": ["https://*.youtube.com/*"],
-      "js": ["content.js"] //И мы указываем, что наш скрипт (в нашем случае для манипуляции DOM) прописан в "content.js"
+      "js": ["content.js"]
     }
   ],
   "web_accessible_resources": [
@@ -32,6 +32,6 @@
       "32": "assets/ext-icon.png"
     },
     "default_title": "My YT Bookmarks",
-    "default_popup": "popup.html" //То какой файл будет ответственный за UI нашего плагина (появляющееся окошко с функционалом)
+    "default_popup": "popup.html"
   }
 }

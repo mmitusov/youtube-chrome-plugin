@@ -1,15 +1,11 @@
-//Логика благодаря которой наш браузер будет знать, что мы открыли/перепрыгнули на другю вкладку
-//Чтобы когда мы оказались на нужной нам вкладке мы могли бы запустить наш скрипт для этой страницы
-//Для этого будем мониторить самую недавно открыую вкладку или вкладку на которой мы сейчас находимся
+chrome.tabs.onUpdated.addListener((tabId, tab) => {
+  if (tab.url && tab.url.includes("youtube.com/watch")) { 
+    const queryParameters = tab.url.split("?")[1]; 
+    const urlParameters = new URLSearchParams(queryParameters);
 
-chrome.tabs.onUpdated.addListener((tabId, tab) => { //P.S. Мы можем повесить слушатель, так как в manifest.json мы дали доступ к chrome.tabs
-    if (tab.url && tab.url.includes("youtube.com/watch")) { //Если у нас открыт tab.url и мы специфически находимся на "youtube.com/watch"
-      const queryParameters = tab.url.split("?")[1]; //Будем использовать как уникальный id индетификатор все что идет после "?" в строке запроса
-      const urlParameters = new URLSearchParams(queryParameters);//Интерфейс чтобы работать с url параметрами
-  
-      chrome.tabs.sendMessage(tabId, { //Messaging system inside extention. Отправляем сообщение в наш content.js скрипт, что нужная нам страница открыта 
-        type: "NEW", //Говорим, что новое видео загрузилось - new video event
-        videoId: urlParameters.get("v"), //И указываем уникальный id этого видео после значения "v"
-      }); //Объект который мы передаем вторым параметром может иметь любой вид. Мы решили использовать type и videoId для нашего удобства
-    }
-  });
+    chrome.tabs.sendMessage(tabId, {
+      type: "NEW",
+      videoId: urlParameters.get("v"),
+    });
+  }
+});
